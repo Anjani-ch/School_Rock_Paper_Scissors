@@ -1,0 +1,54 @@
+#game-view {
+    display: none;
+    text-align: center;
+}
+
+#game-view #feedback { color: var(--light); }
+
+#scores {
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#scores h1 {
+    margin: 0;
+    font-size: 3rem;
+    color: var(--light);
+    padding: 10px 25px;
+    border: 2px solid var(--light);
+    border-radius: 15px;
+}
+
+#view-rounds {
+    margin-top: 10px;
+    /* display: none; */
+}
+
+#choices h2 { color: var(--light); }
+
+#choices i {
+    cursor: pointer;
+    transform: scale(1);
+    transition: transform .3s ease;
+}
+
+#choices i:hover { transform: scale(.9); }
+
+#countdown {
+    color: var(--light);
+    font-size: 8.5rem;
+}
+
+#round-view {
+    max-width: 600px;
+    margin: auto;
+}
+
+#round-view div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

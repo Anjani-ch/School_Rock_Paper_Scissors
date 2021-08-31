@@ -1,18 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 
-:root {
-    --primary: red;
-    --secondary: yellow;
-    --light: white;
-}
-
-* { font-family: 'Poppins', sans-serif; }
+@import url('./var.css');
+@import url('./popup.css');
+@import url('./header.css');
+@import url('./startView.css');
+@import url('./gameView.css');
 
 body {
     margin: 0;
     background: black;
 }
+
+* { font-family: 'Poppins', sans-serif; }
 
 button {
     background: var(--primary);
@@ -22,41 +22,16 @@ button {
     cursor: pointer;
     border: 0;
     outline: 0;
+    transform: scale(1);
+    transition: transform .3s ease;
 }
 
-header {
-    text-align: center;
-    border-bottom: 3px solid var(--primary);
-    background: var(--light);
+button:hover {
+    transform: scale(.95);
 }
-
-header h1 {
-    margin: 0;
-    padding: 15px 0px;
-}
-
-#start-view { text-align: center; }
-
-#start-view p,
-#start-view #start-btn {
-    font-size: 1.1rem;
-}
-
-#start-view p {
-    font-weight: bold;
-    color: var(--light);
-}
-
-#game-view {
-    display: none;
-    text-align: center;
-}
-
-#game-view h2 { color: var(--light); }
 
 i {
     font-size: 8rem;
     margin: 0px 20px;
-    cursor: pointer;
     color: var(--secondary);
 }

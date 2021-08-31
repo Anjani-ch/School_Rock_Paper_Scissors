@@ -1,0 +1,31 @@
+#rounds-popup-wrapper {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    z-index: 1;
+}
+
+#rounds-popup {
+    width: 80%;
+    margin: 10px auto;
+    background: white;
+    border-radius: 10px;
+    padding: 10px 15px;
+}
+
+#rounds-popup #popup-content {
+    width: 90%;
+    margin: auto;
+}
+
+.round h1 { text-align: center; }
+
+ol { padding: 0px; }
+
+ol li { font-size: 3rem; }
+
+ol li i { font-size: 6rem; }

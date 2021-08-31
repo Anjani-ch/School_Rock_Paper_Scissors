@@ -9,25 +9,63 @@
         integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/styles.css" type="text/css">
-    <script src="js/index.js" type="text/javascript" defer></script>
+    <script src="js/index.js" type="module" defer></script>
     <title>Stein Saks Papir</title>
 </head>
 
 <body>
+    <div id="rounds-popup-wrapper">
+        <div id="rounds-popup">
+            <div id="popup-content">
+                <button id="close-popup">Tilbake</button>
+                <div id="round-results">
+                    <!-- <div class="round">
+                        <h1>Round 1:</h1>
+                        <ol>
+                            <li><i class="fas fa-hand-rock"></i> <i class="fas fa-hand-paper"></i></li>
+                            <li><i class="fas fa-hand-rock"></i> <i class="fas fa-hand-paper"></i></li>
+                            <li><i class="fas fa-hand-rock"></i> <i class="fas fa-hand-paper"></i></li>
+                        </ol>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <header>
         <h1>Stein Saks Papir</h1>
     </header>
 
     <section id="start-view">
-        <p>Det er best av tre som gjelder. Stein slår saks, saks slår papir, og papir slår stein</p>
+        <p>Det er best av tre som gjelder. Stein slår saks, saks slår papir, og papir slår stein. Det kommer til å telle
+            ned fra 3. Hvis du ikke velger noe før VIS så taper du automatisk.</p>
         <button id="start-btn">Start</button>
     </section>
 
     <section id="game-view">
-        <h2>GAMEVIEW</h2>
-        <i class="fas fa-hand-rock"></i>
-        <i class="fas fa-hand-paper"></i>
-        <i class="fas fa-hand-scissors"></i>
+        <div id="scores">
+            <h1><span id="player-score">0</span> : <span id="computer-score">0</span></h1>
+            <button id="view-rounds">Resultater</button>
+        </div>
+
+        <div id="choices">
+            <h2>Velg:</h2>
+            <div>
+                <i class="fas fa-hand-rock"></i>
+                <i class="fas fa-hand-paper"></i>
+                <i class="fas fa-hand-scissors"></i>
+            </div>
+        </div>
+
+        <div id="round-view">
+            <div>
+                <i class="fas fa-hand-rock" id="player-hand"></i>
+                <div id="countdown"></div>
+                <i class="fas fa-hand-rock" id="computer-hand"></i>
+            </div>
+            <h2 id="feedback"></h2>
+            <button id="restart-btn">Spille Igjen?</button>
+        </div>
     </section>
 </body>
 
