@@ -22,10 +22,7 @@
     border-radius: 15px;
 }
 
-#view-rounds {
-    margin-top: 10px;
-    /* display: none; */
-}
+#view-rounds { margin-top: 10px; }
 
 #choices h2 { color: var(--light); }
 
@@ -52,3 +49,6 @@
     align-items: center;
     justify-content: space-between;
 }
+
+/* .is-scissors { transform: scaleX(-1); } */
+.is-scissors { color: red; }

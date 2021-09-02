@@ -24,8 +24,12 @@
 
 .round h1 { text-align: center; }
 
-ol { padding: 0px; }
+ul {
+    padding: 0px;
+    list-style: none;
+    text-align: center;
+}
 
-ol li { font-size: 3rem; }
+ul li { font-size: 3rem; }
 
-ol li i { font-size: 6rem; }
+ul li i { font-size: 6rem; }

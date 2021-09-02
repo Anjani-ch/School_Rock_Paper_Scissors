@@ -1,66 +1,59 @@
-import { showPopup, closePopup } from './popup.js'
-import playAudio from './audio.js'
+import * as popup from './popup.js'
+import * as game from './game.js'
+import * as moves from './moves.js'
+import * as score from './score.js'
 
 const closePopupBtn = document.querySelector('#close-popup')
-const roundResults = document.querySelector('#round-results')
-const startView = document.querySelector('#start-view')
 const startBtn = document.querySelector('#start-btn')
-const gameView = document.querySelector('#game-view')
 const playerScore = document.querySelector('#player-score')
 const computerScore = document.querySelector('#computer-score')
 const viewRoundsBtn = document.querySelector('#view-rounds')
-const choicesEl = document.querySelector('#choices')
+const choices = document.querySelector('#choices')
 const playerHand = document.querySelector('#player-hand')
 const countdown = document.querySelector('#countdown')
 const computerHand = document.querySelector('#computer-hand')
 const feedback = document.querySelector('#feedback')
 const restartBtn = document.querySelector('#restart-btn')
 
-const playerRoundWinText = 'Du vant runden!'
-const computerRoundWinText = 'Du tapte runden!'
-const drawRoundText = 'Runden ble uavgjort!'
-
-const playerMatchWinText = 'Du Vant!'
-const computerMatchWinText = 'Du Tapte!'
+const playerRoundWinText = 'Du Vant!'
+const computerRoundWinText = 'Du Tapte!'
 const drawMatchText = 'Det ble uavgjort'
 
 const rock = 'fas fa-hand-rock'
 const paper = 'fas fa-hand-paper'
 const scissors = 'fas fa-hand-scissors'
 
-const choices = [rock, paper, scissors]
+const allMoves = [rock, paper, scissors]
 
-const choicesMade = []
+let movesMade = []
 
-let currentRound = 0
+let currentGame = 0
 
-let matchesPlayed = 0
-let playerMatchesWon = 0
-let computerMatchesWon = 0
+let roundsPlayed = 0
+let playerRoundsWon = 0
+let computerRoundsWon = 0
 
 let countdownCount = 3
 
-let tempPlayerChoice = ''
-let tempComputerChoice = ''
+let tempPlayerMove = ''
+let tempComputerMove = ''
 
-let playerChoice = ''
-let computerChoice = null
+let playerMove = ''
+let computerMove = null
 
 let countdownInterval = null
 let changeHandsInterval = null
 
-const getRandomChoiceIndex = () => Math.round(Math.random() * (choices.length - 1))
-
 const runChangeHandsInterval = () => {
     changeHandsInterval = setInterval(() => {
-        const playerRandomChoice = getRandomChoiceIndex()
-        const computerRandomChoice = getRandomChoiceIndex()
+        const playerRandomChoice = moves.getRandomMoveIndex(allMoves)
+        const computerRandomChoice = moves.getRandomMoveIndex(allMoves)
 
-        tempPlayerChoice = choices[playerRandomChoice]
-        tempComputerChoice = choices[computerRandomChoice]
+        tempPlayerMove = allMoves[playerRandomChoice]
+        tempComputerMove = allMoves[computerRandomChoice]
 
-        playerHand.className = tempPlayerChoice
-        computerHand.className = choices[computerRandomChoice]
+        playerHand.className = `${tempPlayerMove} ${tempPlayerMove === scissors ? 'is-scissors' : ''}`
+        computerHand.className = allMoves[computerRandomChoice]
 
         if (!countdownInterval) stopChangeHandsInterval()
     }, 300)
@@ -69,8 +62,8 @@ const runChangeHandsInterval = () => {
 const stopChangeHandsInterval = () => {
     clearInterval(changeHandsInterval)
     changeHandsInterval = null
-    playerHand.className = playerChoice ? playerChoice : tempPlayerChoice
-    computerHand.className = computerChoice ? computerChoice : tempComputerChoice
+    playerHand.className = playerMove ? playerMove : tempPlayerMove
+    computerHand.className = computerMove ? computerMove : tempComputerMove
 }
 
 const runCountdownInterval = () => {
@@ -81,16 +74,16 @@ const runCountdownInterval = () => {
         countdown.textContent = countdownCount
 
         if (countdownCount === 0) {
-            computerChoice = getComputerMove()
+            computerMove = moves.getComputerMove(allMoves)
 
             countdown.textContent = 'VIS!'
-            playerHand.className = playerChoice
-            computerHand.className = computerChoice
 
-            choicesMade.push({ player: playerChoice, computer: computerChoice })
+            playerHand.className = `${playerMove ? playerMove : tempPlayerMove} ${playerMove === scissors || tempPlayerMove === scissors ? 'is-scissors' : ''}`
+
+            computerHand.className = computerMove
 
             stopCountdownInterval()
-            checkMatchResult()
+            checkRoundResult()
         }
     }, 1000);
 }
@@ -100,135 +93,90 @@ const stopCountdownInterval = () => {
     countdownInterval = null
 }
 
-const changeToGameView = () => {
-    startView.style.display = 'none'
-    gameView.style.display = 'block'
-
-    startNewGame()
-}
-
-const startNewGame = () => {
-    currentRound++
-
-    matchesPlayed = 0
-    playerMatchesWon = 0
-    computerMatchesWon = 0
-
-    playerScore.textContent = playerMatchesWon
-    computerScore.textContent = computerMatchesWon
-
-    startRound()
-}
-
-const stopGame = () => {
+const stopGameRound = () => {
     stopCountdownInterval()
     stopChangeHandsInterval()
 }
 
-const startRound = () => {
+const startNewGame = () => {
+    movesMade = []
+
+    currentGame++
+
+    roundsPlayed = 0
+    playerRoundsWon = score.update(playerRoundsWon, true)
+    computerRoundsWon = score.update(computerRoundsWon, true)
+
+    playerScore.textContent = playerRoundsWon
+    computerScore.textContent = computerRoundsWon
+
+    startGameRound()
+}
+
+const startGameRound = () => {
     viewRoundsBtn.style.display = 'none'
     restartBtn.style.display = 'none'
 
     feedback.textContent = ''
 
-    playerChoice = ''
+    playerMove = ''
     countdownCount = 3
 
     runCountdownInterval()
     runChangeHandsInterval()
 }
 
-const updateRoundResults = () => {
-    const roundEl = document.createElement('DIV')
-    const roundHeading = document.createElement('H1')
-    const roundList = document.createElement('OL')
+const checkRoundResult = () => {
+    const isGameOver = roundsPlayed === 2 || playerRoundsWon === 2 && computerRoundsWon === 0 || computerRoundsWon === 2 && playerRoundsWon === 0
 
-    roundHeading.textContent = `Round ${currentRound}:`
+    const hasPlayerWon = playerMove === paper && computerMove === rock || playerMove === scissors && computerMove === paper || playerMove === rock && computerMove === scissors
 
-    choicesMade.forEach(choice => {
-        const matchResult = document.createElement('LI')
+    const hasComputerWon = computerMove === paper && playerMove === rock || computerMove === scissors && playerMove === paper || computerMove === rock && playerMove === scissors
 
-        matchResult.innerHTML = `<i class="fas ${choice.player}"></i> <i class="fas ${choice.computer}"></i>`
-        roundList.appendChild(matchResult)
-    })
+    const isDraw = playerMove === computerMove
 
-    roundEl.classList.add('round')
+    const isInvalidChoice = countdownCount > 1 || !playerMove
 
-    roundEl.appendChild(roundHeading)
-    roundEl.appendChild(roundList)
-    roundResults.appendChild(roundEl)
-}
-
-const makePlayerMove = e => {
-    playerChoice = e.target.className
-    if (countdownInterval) checkMatchResult()
-}
-
-const getComputerMove = () => choices[getRandomChoiceIndex()]
-
-const checkMatchResult = () => {
-    const isGameOver = matchesPlayed === 2 || playerMatchesWon === 2 && computerMatchesWon === 0 || computerMatchesWon === 2 && playerMatchesWon === 0
-
-    const hasPlayerWon = playerChoice === paper && computerChoice === rock || playerChoice === scissors && computerChoice === paper || playerChoice === rock && computerChoice === scissors
-
-    const hasComputerWon = computerChoice === paper && playerChoice === rock || computerChoice === scissors && playerChoice === paper || computerChoice === rock && playerChoice === scissors
-
-    const isDraw = playerChoice === computerChoice
-
-    const isNotValidChoice = parseInt(countdown.textContent) > 1 || !playerChoice
-
-    if (isNotValidChoice) {
-        feedback.textContent = computerMatchWinText
+    if (isInvalidChoice) {
+        feedback.textContent = computerRoundWinText
     } else if (hasPlayerWon) {
-        feedback.textContent = playerMatchWinText
-        updateScore('player')
+        feedback.textContent = playerRoundWinText
+
+        playerRoundsWon = score.update(playerRoundsWon)
+        score.updateEl(playerScore, playerRoundsWon)
     } else if (hasComputerWon) {
-        feedback.textContent = computerMatchWinText
-        updateScore('computer')
+        feedback.textContent = computerRoundWinText
+
+        computerRoundsWon = score.update(computerRoundsWon)
+        score.updateEl(computerScore, computerRoundsWon)
     } else if (isDraw) {
         feedback.textContent = drawMatchText
     }
 
-    matchesPlayed++
+    roundsPlayed++
 
-    stopGame()
+    stopGameRound()
+
+    if (!isGameOver) {
+        movesMade.push({
+            player: playerMove ? playerMove : tempPlayerMove,
+            computer: computerMove ? computerMove : tempPlayerMove
+        })
+    }
 
     if (isGameOver) {
         viewRoundsBtn.style.display = 'inline-block'
         restartBtn.style.display = 'inline-block'
 
-        checkRoundResult()
-        updateRoundResults()
+        game.checkGameResult(feedback, playerRoundsWon, computerRoundsWon)
+        popup.update(currentGame, movesMade, scissors)
     } else {
-        setTimeout(startRound, 1000)
-    }
-}
-
-const checkRoundResult = () => {
-    if (playerMatchesWon > computerMatchesWon) {
-        feedback.textContent = playerRoundWinText
-        playAudio(true)
-    } else if (playerMatchesWon < computerMatchesWon) {
-        feedback.textContent = computerRoundWinText
-        playAudio(false)
-    } else {
-        feedback.textContent = drawRoundText
-        playAudio(false)
-    }
-}
-
-const updateScore = scoreToBeUpdated => {
-    if (scoreToBeUpdated === 'player') {
-        playerMatchesWon++
-        playerScore.textContent = playerMatchesWon
-    } else if (scoreToBeUpdated === 'computer') {
-        computerMatchesWon++
-        computerScore.textContent = computerMatchesWon
+        setTimeout(startGameRound, 1000)
     }
 }
 
 restartBtn.addEventListener('click', startNewGame)
-viewRoundsBtn.addEventListener('click', showPopup)
-closePopupBtn.addEventListener('click', closePopup)
-startBtn.addEventListener('click', changeToGameView)
-choicesEl.addEventListener('click', e => e.target.classList.contains('fas') ? makePlayerMove(e) : '')
+viewRoundsBtn.addEventListener('click', popup.show)
+closePopupBtn.addEventListener('click', popup.close)
+startBtn.addEventListener('click', () => game.show(startNewGame))
+choices.addEventListener('click', e => e.target.classList.contains('fas') ? playerMove = moves.getPlayerMove(e, countdownInterval, countdownCount, checkRoundResult) : '')

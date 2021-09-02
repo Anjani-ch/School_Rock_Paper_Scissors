@@ -1,6 +1,6 @@
 header {
     text-align: center;
-    border-bottom: 3px solid var(--primary);
+    border-bottom: 5px solid var(--primary);
     background: var(--light);
 }
 
