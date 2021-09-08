@@ -35,3 +35,5 @@ i {
     margin: 0px 20px;
     color: var(--secondary);
 }
+
+.is-scissors { transform: scaleX(-1); }

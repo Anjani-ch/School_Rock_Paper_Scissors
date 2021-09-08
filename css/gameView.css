@@ -49,6 +49,3 @@
     align-items: center;
     justify-content: space-between;
 }
-
-/* .is-scissors { transform: scaleX(-1); } */
-.is-scissors { color: red; }

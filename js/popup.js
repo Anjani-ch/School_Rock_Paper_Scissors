@@ -5,14 +5,14 @@ const show = () => popupWrapper.style.display = 'block'
 
 const close = () => popupWrapper.style.display = 'none'
 
-const update = (currentGame, choicesMade, scissors) => {
+const update = () => {
     const roundEl = document.createElement('DIV')
     const roundHeading = document.createElement('H1')
     const roundList = document.createElement('UL')
 
     roundHeading.textContent = `Round ${currentGame}:`
-    console.log(choicesMade)
-    choicesMade.forEach((choice, index) => {
+
+    movesMade.forEach((choice, index) => {
         const matchResult = document.createElement('LI')
 
         matchResult.innerHTML = `<span>${index + 1}</span>. <i class="fas ${choice.player} ${choice.player === scissors ? 'is-scissors' : ''}"></i> <i class="fas ${choice.computer}"></i>`
