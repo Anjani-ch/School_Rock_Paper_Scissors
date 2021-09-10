@@ -24,6 +24,9 @@ const stopChangeHandsInterval = () => {
     clearInterval(changeHandsInterval)
     changeHandsInterval = null
 
+    if (playerMove) tempPlayerMove = ''
+    if (computerMove) tempComputerMove = ''
+
     if (!tempPlayerMove) playerHand.className = `${playerMove} ${playerMove === scissors ? 'is-scissors' : ''}`
     if (!tempComputerMove) computerHand.className = computerMove
 }

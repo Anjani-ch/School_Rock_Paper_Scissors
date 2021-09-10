@@ -86,6 +86,20 @@ const checkRoundResult = () => {
     const isInvalidChoice = countdownCount > 1 || !playerMove
 
     if (isInvalidChoice) {
+        if (countdownCount > 1) {
+            switch (playerMove) {
+                case rock:
+                    computerMove = paper
+                    break
+                case paper:
+                    computerMove = scissors
+                    break
+                case scissors:
+                    computerMove = rock
+                    break
+            }
+        }
+
         feedback.textContent = computerRoundWinText
 
         computerRoundsWon = score.update(computerRoundsWon)
