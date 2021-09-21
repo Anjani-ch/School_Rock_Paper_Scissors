@@ -49,8 +49,8 @@ const startNewGame = () => {
 }
 
 const startGameRound = () => {
-    viewRoundsBtn.style.display = 'none'
-    restartBtn.style.display = 'none'
+    // viewRoundsBtn.style.display = 'none'
+    // restartBtn.style.display = 'none'
 
     feedback.textContent = ''
 
@@ -59,6 +59,7 @@ const startGameRound = () => {
 
     interval.runCountdownInterval()
     interval.runChangeHandsInterval()
+    popup.closeFeedbackPopup()
 }
 
 const checkGameResult = () => {
@@ -75,7 +76,7 @@ const checkGameResult = () => {
 }
 
 const checkRoundResult = () => {
-    let isGameOver = null
+    let isGameOver
 
     const hasPlayerWon = playerMove === paper && computerMove === rock || playerMove === scissors && computerMove === paper || playerMove === rock && computerMove === scissors
 
@@ -104,18 +105,24 @@ const checkRoundResult = () => {
 
         computerRoundsWon = score.update(computerRoundsWon)
         score.updateEl(computerScore, computerRoundsWon)
+        popup.showFeedbackPopup('round')
     } else if (hasPlayerWon) {
         feedback.textContent = playerRoundWinText
 
         playerRoundsWon = score.update(playerRoundsWon)
         score.updateEl(playerScore, playerRoundsWon)
+        popup.showFeedbackPopup('round')
+
     } else if (hasComputerWon) {
         feedback.textContent = computerRoundWinText
 
         computerRoundsWon = score.update(computerRoundsWon)
         score.updateEl(computerScore, computerRoundsWon)
+        popup.showFeedbackPopup('round')
+
     } else if (isDraw) {
         feedback.textContent = drawMatchText
+        popup.showFeedbackPopup('round')
     }
 
     isGameOver = roundsPlayed === 2 || playerRoundsWon === 2 && computerRoundsWon === 0 || computerRoundsWon === 2 && playerRoundsWon === 0
@@ -130,11 +137,12 @@ const checkRoundResult = () => {
     })
 
     if (isGameOver) {
-        viewRoundsBtn.style.display = 'inline-block'
-        restartBtn.style.display = 'inline-block'
+        // viewRoundsBtn.style.display = 'inline-block'
+        // restartBtn.style.display = 'inline-block'
 
         checkGameResult()
-        popup.update()
+        popup.updateRoundsPopup()
+        popup.showFeedbackPopup('game')
     } else {
         setTimeout(startGameRound, 1000)
     }

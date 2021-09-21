@@ -3,8 +3,6 @@
     text-align: center;
 }
 
-#game-view #feedback { color: var(--light); }
-
 #scores {
     margin-top: 10px;
     display: inline-flex;

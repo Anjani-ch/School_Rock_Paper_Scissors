@@ -1,11 +1,13 @@
-const popupWrapper = document.querySelector('#rounds-popup-wrapper')
-const roundResults = document.querySelector('#round-results')
+const roundsPopupWrapper = document.querySelector('#rounds-popup-wrapper')
+const roundsPopupResults = document.querySelector('#round-results')
+const feedbackPopupWrapper = document.querySelector('#feedback-popup-wrapper')
+const feedbackPopup = document.querySelector('#feedback-popup')
 
-const show = () => popupWrapper.style.display = 'block'
+const showRoundsPopup = () => roundsPopupWrapper.style.display = 'block'
 
-const close = () => popupWrapper.style.display = 'none'
+const closeRoundsPopup = () => roundsPopupWrapper.style.display = 'none'
 
-const update = () => {
+const updateRoundsPopup = () => {
     const roundEl = document.createElement('DIV')
     const roundHeading = document.createElement('H1')
     const roundList = document.createElement('UL')
@@ -23,7 +25,20 @@ const update = () => {
 
     roundEl.appendChild(roundHeading)
     roundEl.appendChild(roundList)
-    roundResults.appendChild(roundEl)
+    roundsPopupResults.appendChild(roundEl)
 }
 
-export { show, close, update }
+const showFeedbackPopup = state => {
+    feedbackPopupWrapper.style.display = 'block'
+    feedbackPopup.style.display = 'flex'
+
+    if (state === 'game') restartBtn.style.display = 'inline-block'
+    else if (state === 'round') restartBtn.style.display = 'none'
+}
+
+const closeFeedbackPopup = () => {
+    feedbackPopupWrapper.style.display = 'none'
+    feedbackPopup.style.display = 'none'
+}
+
+export { showRoundsPopup, closeRoundsPopup, updateRoundsPopup, showFeedbackPopup, closeFeedbackPopup }

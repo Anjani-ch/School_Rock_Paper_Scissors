@@ -33,3 +33,24 @@ ul {
 ul li { font-size: 3rem; }
 
 ul li i { font-size: 6rem; }
+
+#feedback-popup-wrapper {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+#feedback-popup {
+    padding: 10px 15px;
+    background: white;
+    border-radius: 10px;
+}
+
+#feedback-popup .popup-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
