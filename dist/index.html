@@ -15,6 +15,7 @@
 </head>
 
 <body>
+    <!-- Rounds Popup -->
     <div id="rounds-popup-wrapper">
         <div id="rounds-popup">
             <div id="popup-content">
@@ -24,22 +25,27 @@
         </div>
     </div>
 
+    <!-- Header -->
     <header>
         <h1>Stein Saks Papir</h1>
     </header>
 
-    <section id="start-view">
+    <!-- Start View -->
+    <section id="start-view" class="show">
         <p>Det er best av tre som gjelder. Stein slår saks, saks slår papir, og papir slår stein. Det kommer til å telle
             ned fra 3. Hvis du ikke velger noe før VIS så taper du automatisk.</p>
         <button id="start-btn">Start</button>
     </section>
 
+    <!-- Game View -->
     <section id="game-view">
+        <!-- Scores -->
         <div id="scores">
             <h1><span id="player-score">0</span> : <span id="computer-score">0</span></h1>
             <button id="view-rounds">Resultater</button>
         </div>
 
+        <!-- Choices -->
         <div id="choices">
             <h2>Velg:</h2>
             <div>
@@ -47,15 +53,8 @@
                 <i class="fas fa-hand-paper"></i>
                 <i class="fas fa-hand-scissors"></i>
             </div>
-        </div>
 
-        <div id="round-view">
-            <div>
-                <i class="fas fa-hand-rock" id="player-hand"></i>
-                <div id="countdown"></div>
-                <i class="fas fa-hand-rock" id="computer-hand"></i>
-            </div>
-
+            <!-- Feedback Popup -->
             <div id="feedback-popup-wrapper">
                 <div id="feedback-popup">
                     <div class="popup-content">
@@ -63,6 +62,17 @@
                         <button id="restart-btn">Spille Igjen?</button>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Round View -->
+        <div id="round-view">
+
+            <!-- Result Display -->
+            <div>
+                <div><i class="fas fa-hand-rock" id="player-hand"></i></div>
+                <div id="countdown"></div>
+                <div><i class="fas fa-hand-rock" id="computer-hand"></i></div>
             </div>
         </div>
     </section>

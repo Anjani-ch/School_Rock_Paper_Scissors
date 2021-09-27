@@ -35,16 +35,16 @@ ul li { font-size: 3rem; }
 ul li i { font-size: 6rem; }
 
 #feedback-popup-wrapper {
+    display: none;
     position: absolute;
-    top: 55%;
+    top: 70%;
     left: 50%;
-    margin-right: -50%;
     transform: translate(-50%, -50%);
 }
 
 #feedback-popup {
     padding: 10px 15px;
-    background: white;
+    background: var(--light);
     border-radius: 10px;
 }
 
@@ -54,3 +54,5 @@ ul li i { font-size: 6rem; }
     justify-content: center;
     flex-direction: column;
 }
+
+#feedback-popup .popup-content #restart-btn { display: none; }

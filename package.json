@@ -1,0 +1,22 @@
+{
+  "name": "stein_saks_papir",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anjani-ch/Skole_Stein_Saks_Papir.git"
+  },
+  "author": "Anjani Pranav Reddy Chapparapu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Anjani-ch/Skole_Stein_Saks_Papir/issues"
+  },
+  "homepage": "https://github.com/Anjani-ch/Skole_Stein_Saks_Papir#readme",
+  "dependencies": {
+    "gh-pages": "^3.2.3"
+  }
+}

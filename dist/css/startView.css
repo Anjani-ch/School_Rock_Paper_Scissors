@@ -1,4 +1,7 @@
-#start-view { text-align: center; }
+#start-view {
+    text-align: center;
+    display: none;
+}
 
 #start-view p,
 #start-view #start-btn {

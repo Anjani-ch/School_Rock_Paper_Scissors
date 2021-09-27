@@ -1,3 +1,4 @@
+// Global Variables
 const viewRoundsBtn = document.querySelector('#view-rounds')
 const restartBtn = document.querySelector('#restart-btn')
 
@@ -17,7 +18,9 @@ let tempPlayerMove = ''
 let tempComputerMove = ''
 
 let playerMove = ''
-let computerMove = null
+let computerMove
 
-let countdownInterval = null
-let changeHandsInterval = null
+let countdownInterval
+let changeHandsInterval
+
+let game

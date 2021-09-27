@@ -2,17 +2,19 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 
 @import url('./var.css');
+@import url('./utilities.css');
+@import url('./animation.css');
 @import url('./popup.css');
 @import url('./header.css');
 @import url('./startView.css');
 @import url('./gameView.css');
 
+* { font-family: 'Poppins', sans-serif; }
+
 body {
     margin: 0;
     background: black;
 }
-
-* { font-family: 'Poppins', sans-serif; }
 
 button {
     background: var(--primary);
@@ -26,14 +28,10 @@ button {
     transition: transform .3s ease;
 }
 
-button:hover {
-    transform: scale(.95);
-}
+button:hover { transform: scale(.95); }
 
 i {
     font-size: 8rem;
     margin: 0px 20px;
     color: var(--secondary);
 }
-
-.is-scissors { transform: scaleX(-1); }
