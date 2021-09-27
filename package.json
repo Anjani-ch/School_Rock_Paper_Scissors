@@ -6,16 +6,9 @@
   "scripts": {
     "deploy": "gh-pages -d dist"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Anjani-ch/Skole_Stein_Saks_Papir.git"
-  },
   "author": "Anjani Pranav Reddy Chapparapu",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Anjani-ch/Skole_Stein_Saks_Papir/issues"
-  },
-  "homepage": "https://anjani-ch.github.io/Skole_Stein_Saks_Papir",
+  "homepage": "https://anjani-ch.github.io/Skole_Stein_Saks_Papir/",
   "dependencies": {
     "gh-pages": "^3.2.3"
   }
