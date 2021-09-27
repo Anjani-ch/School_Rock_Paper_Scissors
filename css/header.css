@@ -1,0 +1,10 @@
+header {
+    text-align: center;
+    border-bottom: 5px solid var(--primary);
+    background: var(--light);
+}
+
+header h1 {
+    margin: 0;
+    padding: 15px 0px;
+}

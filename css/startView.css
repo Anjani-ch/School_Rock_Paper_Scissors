@@ -1,0 +1,16 @@
+#start-view {
+    text-align: center;
+    display: none;
+}
+
+#start-view p,
+#start-view #start-btn {
+    font-size: 1.1rem;
+}
+
+#start-view p {
+    font-weight: bold;
+    color: var(--light);
+    max-width: 800px;
+    margin: 20px auto;
+}
