@@ -86,7 +86,7 @@ choices.addEventListener('click', e => {
     if (e.target.classList.contains('fas')) {
         const move = new Move('player')
 
-        playerMove = move.get(e.target.className)
+        playerMove = move.get(e)
     }
 })
 

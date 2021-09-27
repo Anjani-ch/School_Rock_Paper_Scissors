@@ -6,7 +6,10 @@ export default class Score {
 
     updateElement = scoreEl => scoreEl.textContent = this.score
 
-    reset = () => this.score = 0
+    reset = scoreEl => {
+        this.score = 0
+        this.updateElement(scoreEl)
+    }
 
     get = () => this.score
 }

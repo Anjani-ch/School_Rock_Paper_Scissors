@@ -3,10 +3,10 @@ export default class Move {
 
     getRandomIndex = () => Math.round(Math.random() * (allMoves.length - 1))
 
-    get = move => {
+    get = e => {
         if (this.turn === 'player') {
             if (countdownInterval && countdownCount !== 1) setTimeout(game.checkRoundResult, 1)
-            return move
+            return e.target.className
         } else if (this.turn === 'computer') {
             return allMoves[this.getRandomIndex()]
         }
