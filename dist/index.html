@@ -9,7 +9,6 @@
         integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/styles.css" type="text/css">
-    <script src="./js/global.js" type="text/javascript" defer></script>
     <script src="js/index.js" type="module" defer></script>
     <title>Stein Saks Papir</title>
 </head>
@@ -17,10 +16,12 @@
 <body>
     <!-- Rounds Popup -->
     <div id="rounds-popup-wrapper">
-        <div id="rounds-popup">
-            <div id="popup-content">
-                <button id="close-popup">Tilbake</button>
-                <div id="round-results"></div>
+        <div class="container">
+            <div id="rounds-popup">
+                <div id="popup-content">
+                    <button id="close-popup">Tilbake</button>
+                    <div id="round-results"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -41,7 +42,7 @@
     <section id="game-view">
         <!-- Scores -->
         <div id="scores">
-            <h1><span id="player-score">0</span> : <span id="computer-score">0</span></h1>
+            <h1><span id="player1-score">0</span> : <span id="player2-score">0</span></h1>
             <button id="view-rounds">Resultater</button>
         </div>
 
@@ -70,9 +71,9 @@
 
             <!-- Result Display -->
             <div>
-                <div><i class="fas fa-hand-rock" id="player-hand"></i></div>
+                <div><i class="fas fa-hand-rock" id="player1-hand"></i></div>
                 <div id="countdown"></div>
-                <div><i class="fas fa-hand-rock" id="computer-hand"></i></div>
+                <div><i class="fas fa-hand-rock" id="player2-hand"></i></div>
             </div>
         </div>
     </section>

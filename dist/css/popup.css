@@ -10,11 +10,12 @@
 }
 
 #rounds-popup {
-    width: 80%;
+    width: 100%;
     margin: 10px auto;
     background: white;
     border-radius: 10px;
     padding: 10px 15px;
+    box-sizing: border-box;
 }
 
 #rounds-popup #popup-content {

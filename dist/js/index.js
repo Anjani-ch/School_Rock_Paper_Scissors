@@ -1,100 +1,71 @@
 // Imports
-import * as popup from './popup.js'
-import Move from './move.js'
-import Game from './game.js'
-import Interval from './interval.js'
+import Move from './models/move.js'
+import Game from './controllers/game.js'
+import Interval from './models/interval.js'
+import View from './controllers/view.js'
+import Countdown from './models/countdown.js'
+import Player from './models/player.js'
+import Computer from './models/computer.js'
 
-// DOM Elements
-const closePopupBtn = document.querySelector('#close-popup')
-const startBtn = document.querySelector('#start-btn')
-const choices = document.querySelector('#choices')
-const playerHand = document.querySelector('#player-hand')
-const computerHand = document.querySelector('#computer-hand')
-const countdown = document.querySelector('#countdown')
+// Create Player
+const player = new Player()
 
-const runChangeHandsInterval = () => {
-    const move = new Move()
+// Create Computer
+const computer = new Computer()
 
-    const playerRandomChoice = move.getRandomIndex()
-    const computerRandomChoice = move.getRandomIndex()
+// Initial Move Instance
+const initialMoveInstance = new Move()
 
-    // Get Random Temp Move
-    tempPlayerMove = allMoves[playerRandomChoice]
-    tempComputerMove = allMoves[computerRandomChoice]
+// Init Countdown
+const countdown = new Countdown(3)
 
-    // Update Hands With Temp Moves
-    playerHand.className = `${tempPlayerMove} ${tempPlayerMove === scissors ? 'is-scissors' : ''}`
-    computerHand.className = tempComputerMove
-
-    if (!countdownInterval) stopChangeHandsInterval()
-}
-
-const stopChangeHandsInterval = () => {
-    // Reset Temp Moves
-    if (playerMove) tempPlayerMove = ''
-    if (computerMove) tempComputerMove = ''
-
-    // Update Final Result
-    if (!tempPlayerMove) playerHand.className = `${playerMove} ${playerMove === scissors ? 'is-scissors' : ''}`
-    if (!tempComputerMove) computerHand.className = computerMove
-}
-
-const runCountdownInterval = () => {
-    // Add Animations
-    playerHand.parentElement.classList.add('animate-hand')
-    computerHand.parentElement.classList.add('animate-hand')
-    countdown.classList.add('animate-countdown')
-
-    countdown.textContent = countdownCount
-    countdownCount--
-    countdown.textContent = countdownCount
-
-    if (countdownCount === 0) {
-        const move = new Move('computer')
-
-        computerMove = move.get()
-
-        countdown.textContent = 'VIS!'
-
-        // Display Final Result
-        playerHand.className = `${playerMove ? playerMove : tempPlayerMove} ${playerMove === scissors || tempPlayerMove === scissors ? 'is-scissors' : ''}`
-
-        computerHand.className = computerMove
-
-        stopCountdownInterval()
-        game.checkRoundResult()
-    }
-}
-
-const stopCountdownInterval = () => {
-    // Remove Animations
-    playerHand.parentElement.classList.remove('animate-hand')
-    computerHand.parentElement.classList.remove('animate-hand')
-    countdown.classList.remove('animate-countdown')
-}
-
-// Init Game
-game = new Game()
+// Init Controllers
+// Init View Controller
+const view = new View(countdown, initialMoveInstance)
 
 // Init Intervals
-countdownInterval = new Interval(runCountdownInterval, stopCountdownInterval, 1000)
-changeHandsInterval = new Interval(runChangeHandsInterval, stopChangeHandsInterval, 300)
+const countdownInterval = new Interval(view => {
+    view.addAnimations()
 
-// Event Listeners
-// Game Event
-choices.addEventListener('click', e => {
-    if (e.target.classList.contains('fas')) {
-        const move = new Move('player')
+    view.updateCountdown(countdown.getCount())
 
-        playerMove = move.get(e.target.className)
-    }
-})
+    return setInterval(() => {
+        countdown.update()
+        view.updateCountdown(countdown.getCount())
 
-restartBtn.addEventListener('click', game.startGame)
+        if (countdown.getCount() === 0) {
+            const move = new Move('computer')
 
-// Button Event
-startBtn.addEventListener('click', game.show)
+            // Update Computer Move
+            if (!computer.getMove()) computer.updateMove(move.get())
 
-// Popup Events
-viewRoundsBtn.addEventListener('click', popup.showRoundsPopup)
-closePopupBtn.addEventListener('click', popup.closeRoundsPopup)
+            view.updateCountdown('VIS!')
+
+            // Display Final Result
+            countdownInterval.stop()
+            game.checkRoundResult()
+            view.displayFinalResult(player, computer)
+        }
+    }, 1000)
+}, view.removeAnimations, view)
+
+const changeHandsInterval = new Interval(view => {
+    return setInterval(() => {
+        const move = new Move()
+
+        // Get Random Temp Move
+        player.updateTempMove(move.getRandom())
+        computer.updateTempMove(move.getRandom())
+
+        // Update Hands With Temp Moves
+        view.handleChangeHandsIntervalStart(player.tempMove, computer.tempMove)
+
+        if (!countdownInterval.isRunning) changeHandsInterval.stop()
+    }, 300)
+}, () => view.handleChangeHandsIntervalEnd(player, computer), view)
+
+// Init Game Controller
+const game = new Game(3, player, computer, countdown, view, initialMoveInstance, countdownInterval, changeHandsInterval)
+
+// Add Event Listeners
+view.addEventListeners(game, player, countdownInterval)
