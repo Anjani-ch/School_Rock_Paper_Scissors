@@ -1,4 +1,4 @@
-# School_Rock_Paper_Scissors
+# Skole_Stein_Saks_Papir
 School project using features like javascript ES6 classes, and CSS animations
 
-#### URL: [anjani-ch.github.io/School_Rock_Paper_Scissors](https://anjani-ch.github.io/School_Rock_Paper_Scissors/)
+#### URL: [anjani-ch.github.io/Skole_Stein_Saks_Papir](https://anjani-ch.github.io/Skole_Stein_Saks_Papir/)
